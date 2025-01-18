@@ -1,0 +1,394 @@
+# **Assignment on Uber dataset**
+Assignment on Uber dataset¶
+xxxxxxxxxx
+ 
+**Load the dataset**
+Load the dataset
+ 
+import pandas as pd
+data=pd.read_csv('Uber.csv')
+data
+Out[1]:
+START_DATE*	END_DATE*	CATEGORY*	START*	STOP*	MILES*	PURPOSE*
+0	1/1/2016 21:11	1/1/2016 21:17	Business	Fort Pierce	Fort Pierce	5.1	Meal/Entertain
+1	1/2/2016 1:25	1/2/2016 1:37	Business	Fort Pierce	Fort Pierce	5.0	NaN
+2	1/2/2016 20:25	1/2/2016 20:38	Business	Fort Pierce	Fort Pierce	4.8	Errand/Supplies
+3	1/5/2016 17:31	1/5/2016 17:45	Business	Fort Pierce	Fort Pierce	4.7	Meeting
+4	1/6/2016 14:42	1/6/2016 15:49	Business	Fort Pierce	West Palm Beach	63.7	Customer Visit
+...	...	...	...	...	...	...	...
+1151	12/31/2016 13:24	12/31/2016 13:42	Business	Kar?chi	Unknown Location	3.9	Temporary Site
+1152	12/31/2016 15:03	12/31/2016 15:38	Business	Unknown Location	Unknown Location	16.2	Meeting
+1153	12/31/2016 21:32	12/31/2016 21:50	Business	Katunayake	Gampaha	6.4	Temporary Site
+1154	12/31/2016 22:08	12/31/2016 23:51	Business	Gampaha	Ilukwatta	48.2	Temporary Site
+1155	Totals	NaN	NaN	NaN	NaN	12204.7	NaN
+1156 rows × 7 columns
+
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Display basic info about dataset**
+Display basic info about dataset
+
+In [2]:
+xxxxxxxxxx
+data.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1156 entries, 0 to 1155
+Data columns (total 7 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   START_DATE*  1156 non-null   object 
+ 1   END_DATE*    1155 non-null   object 
+ 2   CATEGORY*    1155 non-null   object 
+ 3   START*       1155 non-null   object 
+ 4   STOP*        1155 non-null   object 
+ 5   MILES*       1156 non-null   float64
+ 6   PURPOSE*     653 non-null    object 
+dtypes: float64(1), object(6)
+memory usage: 63.3+ KB
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Check for missing values**
+Check for missing values
+
+In [3]:
+xxxxxxxxxx
+ 
+data.isnull().sum()
+Out[3]:
+START_DATE*      0
+END_DATE*        1
+CATEGORY*        1
+START*           1
+STOP*            1
+MILES*           0
+PURPOSE*       503
+dtype: int64
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Drop rows with missing values**
+Drop rows with missing values
+
+In [4]:
+xxxxxxxxxx
+#dropna remove the row if it contain one null value
+data.dropna()
+Out[4]:
+START_DATE*	END_DATE*	CATEGORY*	START*	STOP*	MILES*	PURPOSE*
+0	1/1/2016 21:11	1/1/2016 21:17	Business	Fort Pierce	Fort Pierce	5.1	Meal/Entertain
+2	1/2/2016 20:25	1/2/2016 20:38	Business	Fort Pierce	Fort Pierce	4.8	Errand/Supplies
+3	1/5/2016 17:31	1/5/2016 17:45	Business	Fort Pierce	Fort Pierce	4.7	Meeting
+4	1/6/2016 14:42	1/6/2016 15:49	Business	Fort Pierce	West Palm Beach	63.7	Customer Visit
+5	1/6/2016 17:15	1/6/2016 17:19	Business	West Palm Beach	West Palm Beach	4.3	Meal/Entertain
+...	...	...	...	...	...	...	...
+1150	12/31/2016 1:07	12/31/2016 1:14	Business	Kar?chi	Kar?chi	0.7	Meeting
+1151	12/31/2016 13:24	12/31/2016 13:42	Business	Kar?chi	Unknown Location	3.9	Temporary Site
+1152	12/31/2016 15:03	12/31/2016 15:38	Business	Unknown Location	Unknown Location	16.2	Meeting
+1153	12/31/2016 21:32	12/31/2016 21:50	Business	Katunayake	Gampaha	6.4	Temporary Site
+1154	12/31/2016 22:08	12/31/2016 23:51	Business	Gampaha	Ilukwatta	48.2	Temporary Site
+653 rows × 7 columns
+
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**fill missing values (propose column with unknown value)**
+fill missing values (propose column with unknown value)
+
+In [5]:
+xxxxxxxxxx
+data = data.fillna(method='ffill')
+print(data)
+           START_DATE*         END_DATE* CATEGORY*            START*  \
+0       1/1/2016 21:11    1/1/2016 21:17  Business       Fort Pierce   
+1        1/2/2016 1:25     1/2/2016 1:37  Business       Fort Pierce   
+2       1/2/2016 20:25    1/2/2016 20:38  Business       Fort Pierce   
+3       1/5/2016 17:31    1/5/2016 17:45  Business       Fort Pierce   
+4       1/6/2016 14:42    1/6/2016 15:49  Business       Fort Pierce   
+...                ...               ...       ...               ...   
+1151  12/31/2016 13:24  12/31/2016 13:42  Business           Kar?chi   
+1152  12/31/2016 15:03  12/31/2016 15:38  Business  Unknown Location   
+1153  12/31/2016 21:32  12/31/2016 21:50  Business        Katunayake   
+1154  12/31/2016 22:08  12/31/2016 23:51  Business           Gampaha   
+1155            Totals  12/31/2016 23:51  Business           Gampaha   
+
+                 STOP*   MILES*         PURPOSE*  
+0          Fort Pierce      5.1   Meal/Entertain  
+1          Fort Pierce      5.0   Meal/Entertain  
+2          Fort Pierce      4.8  Errand/Supplies  
+3          Fort Pierce      4.7          Meeting  
+4      West Palm Beach     63.7   Customer Visit  
+...                ...      ...              ...  
+1151  Unknown Location      3.9   Temporary Site  
+1152  Unknown Location     16.2          Meeting  
+1153           Gampaha      6.4   Temporary Site  
+1154         Ilukwatta     48.2   Temporary Site  
+1155         Ilukwatta  12204.7   Temporary Site  
+
+[1156 rows x 7 columns]
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Check and remove duplicates**
+Check and remove duplicates
+
+In [6]:
+xxxxxxxxxx
+ 
+duplicated=data.duplicated()
+print(f"Number of duplicates rows:{duplicated.sum()}")
+Number of duplicates rows:1
+In [7]:
+xxxxxxxxxx
+delete=data.drop_duplicates()
+print(delete)
+           START_DATE*         END_DATE* CATEGORY*            START*  \
+0       1/1/2016 21:11    1/1/2016 21:17  Business       Fort Pierce   
+1        1/2/2016 1:25     1/2/2016 1:37  Business       Fort Pierce   
+2       1/2/2016 20:25    1/2/2016 20:38  Business       Fort Pierce   
+3       1/5/2016 17:31    1/5/2016 17:45  Business       Fort Pierce   
+4       1/6/2016 14:42    1/6/2016 15:49  Business       Fort Pierce   
+...                ...               ...       ...               ...   
+1151  12/31/2016 13:24  12/31/2016 13:42  Business           Kar?chi   
+1152  12/31/2016 15:03  12/31/2016 15:38  Business  Unknown Location   
+1153  12/31/2016 21:32  12/31/2016 21:50  Business        Katunayake   
+1154  12/31/2016 22:08  12/31/2016 23:51  Business           Gampaha   
+1155            Totals  12/31/2016 23:51  Business           Gampaha   
+
+                 STOP*   MILES*         PURPOSE*  
+0          Fort Pierce      5.1   Meal/Entertain  
+1          Fort Pierce      5.0   Meal/Entertain  
+2          Fort Pierce      4.8  Errand/Supplies  
+3          Fort Pierce      4.7          Meeting  
+4      West Palm Beach     63.7   Customer Visit  
+...                ...      ...              ...  
+1151  Unknown Location      3.9   Temporary Site  
+1152  Unknown Location     16.2          Meeting  
+1153           Gampaha      6.4   Temporary Site  
+1154         Ilukwatta     48.2   Temporary Site  
+1155         Ilukwatta  12204.7   Temporary Site  
+
+[1155 rows x 7 columns]
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Convert START_DATE and END_DATE to datetime**
+Convert START_DATE and END_DATE to datetime
+
+In [12]:
+x
+data['START_DATE*']=pd.to_datetime(data['START_DATE*'],errors='coerce')
+​
+In [14]:
+data['END_DATE*']=pd.to_datetime(data['END_DATE*'],errors='coerce')
+data.dtypes
+Out[14]:
+START_DATE*    datetime64[ns]
+END_DATE*      datetime64[ns]
+CATEGORY*              object
+START*                 object
+STOP*                  object
+MILES*                float64
+PURPOSE*               object
+dtype: object
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Total number of rides per category:**
+Total number of rides per category:
+
+In [19]:
+xxxxxxxxxx
+ 
+#category based rides
+category_rides=data.groupby('CATEGORY*').size()
+print(category_rides)
+CATEGORY*
+Business    1079
+Personal      77
+dtype: int64
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Total miles traveled for each purpose:**
+Total miles traveled for each purpose:
+
+In [22]:
+x
+miles_travelled=data.groupby('PURPOSE*')['MILES*'].sum()
+print(miles_travelled)
+PURPOSE*
+Airport/Travel       807.5
+Between Offices      197.0
+Charity ($)           15.1
+Commute              180.2
+Customer Visit      2490.2
+Errand/Supplies     1025.7
+Meal/Entertain      1414.6
+Meeting             3897.0
+Moving                18.2
+Temporary Site     14363.9
+Name: MILES*, dtype: float64
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Average distance for business vs. personal rides:**
+Average distance for business vs. personal rides:
+
+In [25]:
+average=data.groupby('CATEGORY*')['MILES*'].mean()
+print(average)
+CATEGORY*
+Business    21.957090
+Personal     9.320779
+Name: MILES*, dtype: float64
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add a column for cost estimation (assuming $2 per mile):**
+Add a column for cost estimation (assuming $2 per mile):
+
+In [27]:
+xxxxxxxxxx
+data['costestimation']=data['MILES*']*2
+print(data)
+     START_DATE*           END_DATE* CATEGORY*            START*  \
+0            NaT 2016-01-01 21:17:00  Business       Fort Pierce   
+1            NaT 2016-01-02 01:37:00  Business       Fort Pierce   
+2            NaT 2016-01-02 20:38:00  Business       Fort Pierce   
+3            NaT 2016-01-05 17:45:00  Business       Fort Pierce   
+4            NaT 2016-01-06 15:49:00  Business       Fort Pierce   
+...          ...                 ...       ...               ...   
+1151         NaT 2016-12-31 13:42:00  Business           Kar?chi   
+1152         NaT 2016-12-31 15:38:00  Business  Unknown Location   
+1153         NaT 2016-12-31 21:50:00  Business        Katunayake   
+1154         NaT 2016-12-31 23:51:00  Business           Gampaha   
+1155         NaT 2016-12-31 23:51:00  Business           Gampaha   
+
+                 STOP*   MILES*         PURPOSE*  costestimation  
+0          Fort Pierce      5.1   Meal/Entertain            10.2  
+1          Fort Pierce      5.0   Meal/Entertain            10.0  
+2          Fort Pierce      4.8  Errand/Supplies             9.6  
+3          Fort Pierce      4.7          Meeting             9.4  
+4      West Palm Beach     63.7   Customer Visit           127.4  
+...                ...      ...              ...             ...  
+1151  Unknown Location      3.9   Temporary Site             7.8  
+1152  Unknown Location     16.2          Meeting            32.4  
+1153           Gampaha      6.4   Temporary Site            12.8  
+1154         Ilukwatta     48.2   Temporary Site            96.4  
+1155         Ilukwatta  12204.7   Temporary Site         24409.4  
+
+[1156 rows x 8 columns]
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Filter rides longer than 50 miles:**
+Filter rides longer than 50 miles:
+
+In [42]:
+ 
+filter_rides=data[data['MILES*']>50]
+filter_rides.reset_index(drop=True)
+print(filter_rides)
+     START_DATE*           END_DATE* CATEGORY*            START*  \
+4            NaT 2016-01-06 15:49:00  Business       Fort Pierce   
+232          NaT 2016-03-17 15:11:00  Business            Austin   
+251          NaT 2016-03-19 20:39:00  Business         Galveston   
+268          NaT 2016-03-25 16:22:00  Business              Cary   
+269          NaT 2016-03-25 22:22:00  Business             Latta   
+270          NaT 2016-03-26 01:39:00  Business      Jacksonville   
+295          NaT 2016-04-02 14:47:00  Business         Kissimmee   
+296          NaT 2016-04-02 18:09:00  Business     Daytona Beach   
+297          NaT 2016-04-02 22:36:00  Business      Jacksonville   
+298          NaT 2016-04-03 01:34:00  Business         Ridgeland   
+299          NaT 2016-04-03 04:16:00  Business          Florence   
+546          NaT 2016-07-14 20:05:00  Business       Morrisville   
+559          NaT 2016-07-17 15:25:00  Personal             Boone   
+707          NaT 2016-08-24 15:25:00  Business  Unknown Location   
+710          NaT 2016-08-25 19:20:00  Business  Unknown Location   
+726          NaT 2016-08-27 15:44:00  Business            Lahore   
+727          NaT 2016-08-27 19:13:00  Business  Unknown Location   
+751          NaT 2016-09-06 17:49:00  Business  Unknown Location   
+776          NaT 2016-09-28 02:37:00  Business  Unknown Location   
+788          NaT 2016-10-06 17:40:00  Business        R?walpindi   
+869          NaT 2016-10-28 17:59:00  Business              Cary   
+870          NaT 2016-10-28 20:07:00  Business     Winston Salem   
+871          NaT 2016-10-28 22:00:00  Business         Asheville   
+873          NaT 2016-10-29 19:19:00  Business        Hayesville   
+880          NaT 2016-10-30 14:37:00  Business       Bryson City   
+881          NaT 2016-10-30 18:23:00  Business         Asheville   
+1088         NaT 2016-12-21 23:42:00  Business        Rawalpindi   
+1155         NaT 2016-12-31 23:51:00  Business           Gampaha   
+
+                 STOP*   MILES*         PURPOSE*  costestimation  
+4      West Palm Beach     63.7   Customer Visit           127.4  
+232               Katy    136.0   Customer Visit           272.0  
+251            Houston     57.0   Customer Visit           114.0  
+268              Latta    144.0   Customer Visit           288.0  
+269       Jacksonville    310.3   Customer Visit           620.6  
+270          Kissimmee    201.0          Meeting           402.0  
+295      Daytona Beach     77.3   Customer Visit           154.6  
+296       Jacksonville     80.5   Customer Visit           161.0  
+297          Ridgeland    174.2   Customer Visit           348.4  
+298           Florence    144.0          Meeting           288.0  
+299               Cary    159.3          Meeting           318.6  
+546         Banner Elk    195.3  Errand/Supplies           390.6  
+559               Cary    180.2          Commute           360.4  
+707   Unknown Location     96.2   Airport/Travel           192.4  
+710   Unknown Location     50.4   Airport/Travel           100.8  
+726   Unknown Location     86.6   Airport/Travel           173.2  
+727   Unknown Location    156.9   Airport/Travel           313.8  
+751   Unknown Location     69.1   Temporary Site           138.2  
+776   Unknown Location    195.6   Temporary Site           391.2  
+788   Unknown Location    112.6   Temporary Site           225.2  
+869      Winston Salem    107.0          Meeting           214.0  
+870          Asheville    133.6          Meeting           267.2  
+871             Topton     91.8          Meeting           183.6  
+873             Topton     75.7          Meeting           151.4  
+880          Asheville     68.4          Meeting           136.8  
+881             Mebane    195.9          Meeting           391.8  
+1088  Unknown Location    103.0          Meeting           206.0  
+1155         Ilukwatta  12204.7   Temporary Site         24409.4  
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Filter by specific purpose (e.g., meetings):**
+Filter by specific purpose (e.g., meetings):
+
+In [46]:
+xxxxxxxxxx
+ 
+filter=data.groupby('PURPOSE*').size()
+filter
+Out[46]:
+PURPOSE*
+Airport/Travel      54
+Between Offices     18
+Charity ($)          1
+Commute              1
+Customer Visit     155
+Errand/Supplies    173
+Meal/Entertain     245
+Meeting            308
+Moving               4
+Temporary Site     197
+dtype: int64
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**What is the total number of business trips versus personal trips?**
+What is the total number of business trips versus personal trips?
+
+In [48]:
+trips=data.groupby('CATEGORY*').size()
+trips
+Out[48]:
+CATEGORY*
+Business    1079
+Personal      77
+dtype: int64
+xxxxxxxxxx
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**What percentage of trips are business versus personal?**
+What percentage of trips are business versus personal?
+
+In [53]:
+ 
+total=data.shape[0]
+b=data[data["CATEGORY*"]=='Business'].shape[0]
+p=data[data["CATEGORY*"]=='Personal'].shape[0]
+bp=(b/total)*100
+pt=(p/total)*100
+print(bp)
+print(pt)
+93.33910034602077
+6.660899653979238
+In [ ]:

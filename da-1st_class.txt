@@ -1,0 +1,249 @@
+import pandas as pd
+uber_data=pd.read_csv("Uber.csv")
+uber_data.head()
+#shape of the dataframe no of records in the dataset
+print(uber_data.shape)
+#info about the dataframe(colums,data types)
+print(uber_data.info)
+​
+​
+(1156, 7)
+<bound method DataFrame.info of            START_DATE*         END_DATE* CATEGORY*            START*  \
+0       1/1/2016 21:11    1/1/2016 21:17  Business       Fort Pierce   
+1        1/2/2016 1:25     1/2/2016 1:37  Business       Fort Pierce   
+2       1/2/2016 20:25    1/2/2016 20:38  Business       Fort Pierce   
+3       1/5/2016 17:31    1/5/2016 17:45  Business       Fort Pierce   
+4       1/6/2016 14:42    1/6/2016 15:49  Business       Fort Pierce   
+...                ...               ...       ...               ...   
+1151  12/31/2016 13:24  12/31/2016 13:42  Business           Kar?chi   
+1152  12/31/2016 15:03  12/31/2016 15:38  Business  Unknown Location   
+1153  12/31/2016 21:32  12/31/2016 21:50  Business        Katunayake   
+1154  12/31/2016 22:08  12/31/2016 23:51  Business           Gampaha   
+1155            Totals               NaN       NaN               NaN   
+
+                 STOP*   MILES*         PURPOSE*  
+0          Fort Pierce      5.1   Meal/Entertain  
+1          Fort Pierce      5.0              NaN  
+2          Fort Pierce      4.8  Errand/Supplies  
+3          Fort Pierce      4.7          Meeting  
+4      West Palm Beach     63.7   Customer Visit  
+...                ...      ...              ...  
+1151  Unknown Location      3.9   Temporary Site  
+1152  Unknown Location     16.2          Meeting  
+1153           Gampaha      6.4   Temporary Site  
+1154         Ilukwatta     48.2   Temporary Site  
+1155               NaN  12204.7              NaN  
+
+[1156 rows x 7 columns]>
+In [18]:
+ 
+#info about the dataframe(colums,data types)
+print(uber_data.info())
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1156 entries, 0 to 1155
+Data columns (total 7 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   START_DATE*  1156 non-null   object 
+ 1   END_DATE*    1155 non-null   object 
+ 2   CATEGORY*    1155 non-null   object 
+ 3   START*       1155 non-null   object 
+ 4   STOP*        1155 non-null   object 
+ 5   MILES*       1156 non-null   float64
+ 6   PURPOSE*     653 non-null    object 
+dtypes: float64(1), object(6)
+memory usage: 63.3+ KB
+None
+In [8]:
+ 
+print(uber_data.describe())
+             MILES*
+count   1156.000000
+mean      21.115398
+std      359.299007
+min        0.500000
+25%        2.900000
+50%        6.000000
+75%       10.400000
+max    12204.700000
+In [9]:
+xxxxxxxxxx
+print(uber_data.isnull().sum())
+START_DATE*      0
+END_DATE*        1
+CATEGORY*        1
+START*           1
+STOP*            1
+MILES*           0
+PURPOSE*       503
+dtype: int64
+In [14]:
+xxxxxxxxxx
+ 
+#sep defines the delimeter used in the file(default is ,)
+uber_data = pd.read_csv('Uber.csv', sep=',')
+print(uber_data)
+​
+           START_DATE*         END_DATE* CATEGORY*            START*  \
+0       1/1/2016 21:11    1/1/2016 21:17  Business       Fort Pierce   
+1        1/2/2016 1:25     1/2/2016 1:37  Business       Fort Pierce   
+2       1/2/2016 20:25    1/2/2016 20:38  Business       Fort Pierce   
+3       1/5/2016 17:31    1/5/2016 17:45  Business       Fort Pierce   
+4       1/6/2016 14:42    1/6/2016 15:49  Business       Fort Pierce   
+...                ...               ...       ...               ...   
+1151  12/31/2016 13:24  12/31/2016 13:42  Business           Kar?chi   
+1152  12/31/2016 15:03  12/31/2016 15:38  Business  Unknown Location   
+1153  12/31/2016 21:32  12/31/2016 21:50  Business        Katunayake   
+1154  12/31/2016 22:08  12/31/2016 23:51  Business           Gampaha   
+1155            Totals               NaN       NaN               NaN   
+
+                 STOP*   MILES*         PURPOSE*  
+0          Fort Pierce      5.1   Meal/Entertain  
+1          Fort Pierce      5.0              NaN  
+2          Fort Pierce      4.8  Errand/Supplies  
+3          Fort Pierce      4.7          Meeting  
+4      West Palm Beach     63.7   Customer Visit  
+...                ...      ...              ...  
+1151  Unknown Location      3.9   Temporary Site  
+1152  Unknown Location     16.2          Meeting  
+1153           Gampaha      6.4   Temporary Site  
+1154         Ilukwatta     48.2   Temporary Site  
+1155               NaN  12204.7              NaN  
+
+[1156 rows x 7 columns]
+In [16]:
+x
+#dtype:to change any row datatype
+uber=pd.read_csv("Uber.csv",dtype={"MILES": int})
+print(uber)
+           START_DATE*         END_DATE* CATEGORY*            START*  \
+0       1/1/2016 21:11    1/1/2016 21:17  Business       Fort Pierce   
+1        1/2/2016 1:25     1/2/2016 1:37  Business       Fort Pierce   
+2       1/2/2016 20:25    1/2/2016 20:38  Business       Fort Pierce   
+3       1/5/2016 17:31    1/5/2016 17:45  Business       Fort Pierce   
+4       1/6/2016 14:42    1/6/2016 15:49  Business       Fort Pierce   
+...                ...               ...       ...               ...   
+1151  12/31/2016 13:24  12/31/2016 13:42  Business           Kar?chi   
+1152  12/31/2016 15:03  12/31/2016 15:38  Business  Unknown Location   
+1153  12/31/2016 21:32  12/31/2016 21:50  Business        Katunayake   
+1154  12/31/2016 22:08  12/31/2016 23:51  Business           Gampaha   
+1155            Totals               NaN       NaN               NaN   
+
+                 STOP*   MILES*         PURPOSE*  
+0          Fort Pierce      5.1   Meal/Entertain  
+1          Fort Pierce      5.0              NaN  
+2          Fort Pierce      4.8  Errand/Supplies  
+3          Fort Pierce      4.7          Meeting  
+4      West Palm Beach     63.7   Customer Visit  
+...                ...      ...              ...  
+1151  Unknown Location      3.9   Temporary Site  
+1152  Unknown Location     16.2          Meeting  
+1153           Gampaha      6.4   Temporary Site  
+1154         Ilukwatta     48.2   Temporary Site  
+1155               NaN  12204.7              NaN  
+
+[1156 rows x 7 columns]
+In [20]:
+ 
+#skiprows is used to skip the data
+uber=pd.read_csv("Uber.csv",skiprows=10)
+print(uber)
+       1/10/2016 12:17   1/10/2016 12:44  Business            Jamaica  \
+0      1/10/2016 15:08   1/10/2016 15:51  Business           New York   
+1      1/10/2016 18:18   1/10/2016 18:53  Business           Elmhurst   
+2      1/10/2016 19:12   1/10/2016 19:32  Business            Midtown   
+3       1/11/2016 8:55    1/11/2016 9:21  Business        East Harlem   
+4      1/11/2016 11:56   1/11/2016 12:03  Business  Flatiron District   
+...                ...               ...       ...                ...   
+1141  12/31/2016 13:24  12/31/2016 13:42  Business            Kar?chi   
+1142  12/31/2016 15:03  12/31/2016 15:38  Business   Unknown Location   
+1143  12/31/2016 21:32  12/31/2016 21:50  Business         Katunayake   
+1144  12/31/2016 22:08  12/31/2016 23:51  Business            Gampaha   
+1145            Totals               NaN       NaN                NaN   
+
+              New York     16.5   Customer Visit  
+0               Queens     10.8          Meeting  
+1             New York      7.5          Meeting  
+2          East Harlem      6.2          Meeting  
+3                NoMad      6.4   Temporary Site  
+4              Midtown      1.6  Errand/Supplies  
+...                ...      ...              ...  
+1141  Unknown Location      3.9   Temporary Site  
+1142  Unknown Location     16.2          Meeting  
+1143           Gampaha      6.4   Temporary Site  
+1144         Ilukwatta     48.2   Temporary Site  
+1145               NaN  12204.7              NaN  
+
+[1146 rows x 7 columns]
+In [22]:
+#tail is used to get last 5 records
+uber=pd.read_csv("Uber.csv")
+print(uber.tail(10))
+           START_DATE*         END_DATE* CATEGORY*            START*  \
+1146  12/30/2016 11:31  12/30/2016 11:56  Business           Kar?chi   
+1147  12/30/2016 15:41  12/30/2016 16:03  Business           Kar?chi   
+1148  12/30/2016 16:45  12/30/2016 17:08  Business           Kar?chi   
+1149  12/30/2016 23:06  12/30/2016 23:10  Business           Kar?chi   
+1150   12/31/2016 1:07   12/31/2016 1:14  Business           Kar?chi   
+1151  12/31/2016 13:24  12/31/2016 13:42  Business           Kar?chi   
+1152  12/31/2016 15:03  12/31/2016 15:38  Business  Unknown Location   
+1153  12/31/2016 21:32  12/31/2016 21:50  Business        Katunayake   
+1154  12/31/2016 22:08  12/31/2016 23:51  Business           Gampaha   
+1155            Totals               NaN       NaN               NaN   
+
+                 STOP*   MILES*         PURPOSE*  
+1146           Kar?chi      2.9  Errand/Supplies  
+1147           Kar?chi      4.6  Errand/Supplies  
+1148           Kar?chi      4.6          Meeting  
+1149           Kar?chi      0.8   Customer Visit  
+1150           Kar?chi      0.7          Meeting  
+1151  Unknown Location      3.9   Temporary Site  
+1152  Unknown Location     16.2          Meeting  
+1153           Gampaha      6.4   Temporary Site  
+1154         Ilukwatta     48.2   Temporary Site  
+1155               NaN  12204.7              NaN  
+In [23]:
+ 
+print(uber.iloc[2:8])
+      START_DATE*       END_DATE* CATEGORY*           START*            STOP*  \
+2  1/2/2016 20:25  1/2/2016 20:38  Business      Fort Pierce      Fort Pierce   
+3  1/5/2016 17:31  1/5/2016 17:45  Business      Fort Pierce      Fort Pierce   
+4  1/6/2016 14:42  1/6/2016 15:49  Business      Fort Pierce  West Palm Beach   
+5  1/6/2016 17:15  1/6/2016 17:19  Business  West Palm Beach  West Palm Beach   
+6  1/6/2016 17:30  1/6/2016 17:35  Business  West Palm Beach       Palm Beach   
+7  1/7/2016 13:27  1/7/2016 13:33  Business             Cary             Cary   
+
+   MILES*         PURPOSE*  
+2     4.8  Errand/Supplies  
+3     4.7          Meeting  
+4    63.7   Customer Visit  
+5     4.3   Meal/Entertain  
+6     7.1          Meeting  
+7     0.8          Meeting  
+In [26]:
+xxxxxxxxxx
+#this is used to get no of rows and columns 
+print(uber.iloc[20:40,0:3])
+        START_DATE*        END_DATE* CATEGORY*
+20  1/12/2016 15:13  1/12/2016 15:28  Business
+21  1/12/2016 15:42  1/12/2016 15:54  Business
+22  1/12/2016 16:02  1/12/2016 17:00  Business
+23  1/13/2016 13:54  1/13/2016 14:07  Business
+24  1/13/2016 15:00  1/13/2016 15:28  Business
+25  1/14/2016 16:29  1/14/2016 17:05  Business
+26  1/14/2016 21:39  1/14/2016 21:45  Business
+27   1/15/2016 0:41   1/15/2016 1:01  Business
+28  1/15/2016 11:43  1/15/2016 12:03  Business
+29  1/15/2016 13:26  1/15/2016 13:44  Business
+30  1/18/2016 14:55  1/18/2016 15:06  Business
+31  1/18/2016 16:13  1/18/2016 16:24  Business
+32   1/19/2016 9:09   1/19/2016 9:23  Business
+33  1/19/2016 10:55  1/19/2016 11:09  Business
+34  1/20/2016 10:36  1/20/2016 11:11  Business
+35  1/20/2016 11:48  1/20/2016 12:19  Business
+36  1/20/2016 13:25  1/20/2016 14:19  Business
+37  1/21/2016 14:25  1/21/2016 14:29  Business
+38  1/21/2016 14:43  1/21/2016 14:51  Business
+39  1/21/2016 16:01  1/21/2016 16:06  Business
+In [ ]:
+ 
